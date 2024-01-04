@@ -5,6 +5,7 @@ import net.minecraft.util.ActionResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import tech.schizophreniacase.meowhack.Meowhack;
 import tech.schizophreniacase.meowhack.event.events.TickEvent;
@@ -19,4 +20,13 @@ public class MixinMinecraftClient {
         ActionResult result = TickEvent.EVENT.invoker().tick();
         if(result == ActionResult.FAIL) callbackInfo.cancel();
     }
+
+    @ModifyArg(method = "updateWindowTitle", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setWindowTitle(Ljava/lang/String;)V"))
+    private String modifyTitle(String title) {
+        if(Meowhack.INSTANCE.getModuleManager().getModuleByName("CustomTitle").isEnabled()) {
+            return "Meowhack v0.1-dev+4";
+        }
+        return title;
+    }
+
 }

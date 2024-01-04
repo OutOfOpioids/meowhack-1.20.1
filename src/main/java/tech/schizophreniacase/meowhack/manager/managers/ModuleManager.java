@@ -17,4 +17,16 @@ public class ModuleManager {
         );
     }
 
+    public List<Module> getModules() {
+        return modules;
+    }
+
+    public Module getModuleByName(String name) {
+        for (Module module : modules) {
+            if (module.getName().equalsIgnoreCase(name)) {
+                return module;
+            }
+        }
+        return null;
+    }
 }

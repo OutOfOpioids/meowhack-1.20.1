@@ -19,4 +19,7 @@ public class Meowhack implements ModInitializer {
 		moduleManager = new ModuleManager();
 	}
 
+	public ModuleManager getModuleManager() {
+		return moduleManager;
+	}
 }
