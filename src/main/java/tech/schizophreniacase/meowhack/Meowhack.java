@@ -9,14 +9,19 @@ import tech.schizophreniacase.meowhack.manager.managers.ModuleManager;
 
 public class Meowhack implements ModInitializer {
 
-	public static final Meowhack INSTANCE = new Meowhack();
+	public static Meowhack INSTANCE;
     public static final Logger LOGGER = LoggerFactory.getLogger("meowhack");
+
+	public Meowhack() {
+		INSTANCE = this;
+		moduleManager = new ModuleManager();
+	}
 
 	private ModuleManager moduleManager;
 
 	@Override
 	public void onInitialize() {
-		moduleManager = new ModuleManager();
+		LOGGER.info("Welcome to Meowhack!");
 	}
 
 	public ModuleManager getModuleManager() {

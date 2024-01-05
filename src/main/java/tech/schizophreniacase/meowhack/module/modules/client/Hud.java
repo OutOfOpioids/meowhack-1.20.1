@@ -4,10 +4,15 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.ActionResult;
 import tech.schizophreniacase.meowhack.Meowhack;
 import tech.schizophreniacase.meowhack.event.events.Render2DEvent;
+import tech.schizophreniacase.meowhack.manager.managers.ModuleManager;
 import tech.schizophreniacase.meowhack.module.Category;
 import tech.schizophreniacase.meowhack.module.Module;
 import tech.schizophreniacase.meowhack.setting.Setting;
 import tech.schizophreniacase.meowhack.setting.settigns.BooleanSetting;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static tech.schizophreniacase.meowhack.util.Wrapper.mc;
 
@@ -46,6 +51,7 @@ public class Hud extends Module {
         int elementSize = mc.textRenderer.fontHeight + 1;
 
         int topLeft = 2;
+        int topRight = 2;
         int bottomLeft = height - elementSize;
         int bottomRight = height - elementSize;
 
@@ -56,14 +62,21 @@ public class Hud extends Module {
         }
 
         if(arraylist.getValue()) {
-            Meowhack.INSTANCE.getModuleManager().getModules().forEach(module -> {
-                int topRight = 2;
-                if(module.isEnabled()) {
-                    int moduleWidth = mc.textRenderer.getWidth(module.getName());
-                    drawContext.drawTextWithShadow(mc.textRenderer, module.getName(), width - 1 - moduleWidth, topRight, 0xffffff);
-                    topRight += elementSize;
+            ModuleManager moduleManager = Meowhack.INSTANCE.getModuleManager();
+            List<Module> sorted = moduleManager.getModules();
+
+            sorted = sorted.stream().sorted(Comparator.comparing(Module::getName)).collect(Collectors.toList());
+            for (Module module : sorted) {
+                if (!module.isEnabled()) {
+                    continue;
                 }
-            });
+                int textWidth = mc.textRenderer.getWidth(module.getName());
+
+                drawContext.drawTextWithShadow(mc.textRenderer, module.getName(), width - textWidth - 2, topRight, 0xffffff);
+
+                topRight += elementSize;
+            }
+
         }
     }
 }

@@ -21,12 +21,6 @@ public class MixinMinecraftClient {
         if(result == ActionResult.FAIL) callbackInfo.cancel();
     }
 
-    @ModifyArg(method = "updateWindowTitle", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setWindowTitle(Ljava/lang/String;)V"))
-    private String modifyTitle(String title) {
-        if(Meowhack.INSTANCE.getModuleManager().getModuleByName("CustomTitle").isEnabled()) {
-            return "Meowhack v0.1-dev+4";
-        }
-        return title;
-    }
+
 
 }
