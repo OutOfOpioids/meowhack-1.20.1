@@ -7,7 +7,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import tech.schizophreniacase.meowhack.Meowhack;
 import tech.schizophreniacase.meowhack.event.events.Render2DEvent;
+
 import static tech.schizophreniacase.meowhack.util.Wrapper.nullCheck;
 
 @Mixin(InGameHud.class)
@@ -15,8 +17,11 @@ public class MixinInGameHud {
     @Inject(method= "render", at = @At("RETURN"), cancellable = true, remap = false)
     public void render(DrawContext drawContext, float tickDelta, CallbackInfo callbackInfo) {
         if(nullCheck()) {
-            ActionResult result = Render2DEvent.EVENT.invoker().render(drawContext, tickDelta);
-            if(result == ActionResult.FAIL) callbackInfo.cancel();
+            Render2DEvent event = new Render2DEvent(drawContext, tickDelta);
+            Meowhack.INSTANCE.EVENT_BUS.post(event);
+            if(event.isCancelled()) {
+                callbackInfo.cancel();
+            }
         }
     }
 }

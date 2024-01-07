@@ -3,6 +3,7 @@ package tech.schizophreniacase.meowhack.module.modules.client;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.ActionResult;
 import tech.schizophreniacase.meowhack.Meowhack;
+import tech.schizophreniacase.meowhack.event.bus.Subscribe;
 import tech.schizophreniacase.meowhack.event.events.Render2DEvent;
 import tech.schizophreniacase.meowhack.manager.managers.ModuleManager;
 import tech.schizophreniacase.meowhack.module.Category;
@@ -22,7 +23,7 @@ public class Hud extends Module {
         super("Hud", Category.CLIENT);
         INSTANCE = this;
         INSTANCE.enabled = true;
-        render2DListener();
+        Meowhack.INSTANCE.EVENT_BUS.subscribe(this);
     }
 
     public static Setting<Boolean> watermark = new BooleanSetting("Watermark", true);
@@ -38,11 +39,9 @@ public class Hud extends Module {
     public static Setting<Boolean> effect = new BooleanSetting("Effect", true);
     public static Setting<Boolean> time = new BooleanSetting("Time", true);
 
-    public void render2DListener() {
-        Render2DEvent.EVENT.register((drawContext, delta) -> {
-            drawHud(drawContext);
-            return ActionResult.PASS;
-        });
+    @Subscribe
+    public void onRender2D(Render2DEvent event) {
+        drawHud(event.getDrawContext());
     }
 
     private void drawHud(DrawContext drawContext) {
@@ -76,7 +75,6 @@ public class Hud extends Module {
 
                 topRight += elementSize;
             }
-
         }
     }
 }
