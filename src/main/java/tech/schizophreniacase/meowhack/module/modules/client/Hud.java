@@ -1,7 +1,6 @@
 package tech.schizophreniacase.meowhack.module.modules.client;
 
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.util.ActionResult;
 import tech.schizophreniacase.meowhack.Meowhack;
 import tech.schizophreniacase.meowhack.event.bus.Subscribe;
 import tech.schizophreniacase.meowhack.event.events.Render2DEvent;
@@ -10,7 +9,7 @@ import tech.schizophreniacase.meowhack.module.Category;
 import tech.schizophreniacase.meowhack.module.Module;
 import tech.schizophreniacase.meowhack.setting.Setting;
 import tech.schizophreniacase.meowhack.setting.settigns.BooleanSetting;
-import tech.schizophreniacase.meowhack.util.PlayerUtil;
+import tech.schizophreniacase.meowhack.util.HudUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -79,8 +78,20 @@ public class Hud extends Module {
         }
 
         if(coords.getValue()) {
-            drawContext.drawTextWithShadow(mc.textRenderer, PlayerUtil.getCoordinateString(), 2, bottomLeft, 0xffffff);
+            drawContext.drawTextWithShadow(mc.textRenderer, HudUtil.getCoordinateString(), 2, bottomLeft, 0xffffff);
             bottomLeft += elementSize;
+        }
+
+        if(fps.getValue()) {
+            int textWidth = mc.textRenderer.getWidth(HudUtil.getFpsString());
+            drawContext.drawTextWithShadow(mc.textRenderer, HudUtil.getFpsString(), width - textWidth - 2, bottomRight, 0xffffff);
+            bottomRight -= elementSize;
+        }
+
+        if(ping.getValue()) {
+            int textWidth = mc.textRenderer.getWidth(HudUtil.getPingString());
+            drawContext.drawTextWithShadow(mc.textRenderer, HudUtil.getPingString(), width - textWidth - 2, bottomRight, 0xffffff);
+            bottomRight -= elementSize;
         }
     }
 }

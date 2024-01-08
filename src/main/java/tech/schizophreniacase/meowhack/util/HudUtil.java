@@ -6,7 +6,7 @@ import net.minecraft.util.Formatting;
 
 import static tech.schizophreniacase.meowhack.util.Wrapper.mc;
 
-public class PlayerUtil {
+public class HudUtil {
     public static OrderedText getCoordinateString() {
         OrderedText comma = OrderedText.styledForwardsVisitedString(", ", Style.EMPTY.withColor(Formatting.GRAY));
         OrderedText prefix = OrderedText.styledForwardsVisitedString("XYZ: ", Style.EMPTY.withColor(Formatting.GRAY));
@@ -22,6 +22,24 @@ public class PlayerUtil {
           OrderedText.styledForwardsVisitedString(yPos, Style.EMPTY.withColor(Formatting.WHITE)),
           comma,
           OrderedText.styledForwardsVisitedString(zPos, Style.EMPTY.withColor(Formatting.WHITE))
+        );
+    }
+
+    public static OrderedText getFpsString() {
+        OrderedText prefix = OrderedText.styledForwardsVisitedString("FPS: ", Style.EMPTY.withColor(Formatting.GRAY));
+        String fps = String.valueOf(mc.fpsDebugString.split(" ")[0]);
+        return OrderedText.concat(
+          prefix,
+          OrderedText.styledForwardsVisitedString(fps, Style.EMPTY.withColor(Formatting.WHITE))
+        );
+    }
+
+    public static OrderedText getPingString() {
+        OrderedText prefix = OrderedText.styledForwardsVisitedString("Ping: ", Style.EMPTY.withColor(Formatting.GRAY));
+        String ping = String.valueOf(mc.getNetworkHandler().getPlayerListEntry(mc.player.getUuid()).getLatency());
+        return OrderedText.concat(
+          prefix,
+          OrderedText.styledForwardsVisitedString(ping, Style.EMPTY.withColor(Formatting.WHITE))
         );
     }
 }
