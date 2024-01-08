@@ -10,6 +10,7 @@ import tech.schizophreniacase.meowhack.module.Category;
 import tech.schizophreniacase.meowhack.module.Module;
 import tech.schizophreniacase.meowhack.setting.Setting;
 import tech.schizophreniacase.meowhack.setting.settigns.BooleanSetting;
+import tech.schizophreniacase.meowhack.util.PlayerUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -75,6 +76,11 @@ public class Hud extends Module {
 
                 topRight += elementSize;
             }
+        }
+
+        if(coords.getValue()) {
+            drawContext.drawTextWithShadow(mc.textRenderer, PlayerUtil.getCoordinateString(), 2, bottomLeft, 0xffffff);
+            bottomLeft += elementSize;
         }
     }
 }
