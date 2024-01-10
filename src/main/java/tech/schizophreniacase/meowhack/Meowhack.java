@@ -7,6 +7,7 @@ import tech.schizophreniacase.meowhack.event.bus.EventBus;
 import tech.schizophreniacase.meowhack.event.bus.Subscribe;
 import tech.schizophreniacase.meowhack.event.events.TestEvent;
 import tech.schizophreniacase.meowhack.manager.managers.ModuleManager;
+import tech.schizophreniacase.meowhack.manager.managers.TickManager;
 
 public class Meowhack implements ModInitializer {
 
@@ -15,9 +16,13 @@ public class Meowhack implements ModInitializer {
 
 	public EventBus EVENT_BUS = new EventBus();
 
+	private ModuleManager moduleManager;
+	private TickManager tickManager;
+
 	public Meowhack() {
 		INSTANCE = this;
 		moduleManager = new ModuleManager();
+		tickManager = new TickManager();
 		EVENT_BUS.subscribe(this);
 	}
 
@@ -26,8 +31,6 @@ public class Meowhack implements ModInitializer {
 		//LOGGER.info("Test event fired!");
 	}
 
-	private ModuleManager moduleManager;
-
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Welcome to Meowhack!");
@@ -35,5 +38,8 @@ public class Meowhack implements ModInitializer {
 
 	public ModuleManager getModuleManager() {
 		return moduleManager;
+	}
+	public TickManager getTickManager() {
+		return tickManager;
 	}
 }

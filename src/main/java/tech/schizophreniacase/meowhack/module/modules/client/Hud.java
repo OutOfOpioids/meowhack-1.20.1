@@ -93,5 +93,17 @@ public class Hud extends Module {
             drawContext.drawTextWithShadow(mc.textRenderer, HudUtil.getPingString(), width - textWidth - 2, bottomRight, 0xffffff);
             bottomRight -= elementSize;
         }
+
+        if(tps.getValue()) {
+            int textWidth = mc.textRenderer.getWidth(HudUtil.getTpsString());
+            drawContext.drawTextWithShadow(mc.textRenderer, HudUtil.getTpsString(), width - textWidth - 2, bottomRight, 0xffffff);
+            bottomRight -= elementSize;
+        }
+
+        if(time.getValue()) {
+            int textWidth = mc.textRenderer.getWidth(HudUtil.getTimeString());
+            drawContext.drawTextWithShadow(mc.textRenderer, HudUtil.getTimeString(), width - textWidth - 2, bottomRight, 0xffffff);
+            bottomRight -= elementSize;
+        }
     }
 }

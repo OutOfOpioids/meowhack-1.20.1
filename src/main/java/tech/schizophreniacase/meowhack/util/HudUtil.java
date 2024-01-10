@@ -3,6 +3,10 @@ package tech.schizophreniacase.meowhack.util;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.minecraft.util.Formatting;
+import tech.schizophreniacase.meowhack.Meowhack;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import static tech.schizophreniacase.meowhack.util.Wrapper.mc;
 
@@ -40,6 +44,29 @@ public class HudUtil {
         return OrderedText.concat(
           prefix,
           OrderedText.styledForwardsVisitedString(ping, Style.EMPTY.withColor(Formatting.WHITE))
+        );
+    }
+
+    public static OrderedText getTpsString() {
+        OrderedText prefix = OrderedText.styledForwardsVisitedString("TPS: ", Style.EMPTY.withColor(Formatting.GRAY));
+        String tps = String.valueOf(String.format("%.1f", Meowhack.INSTANCE.getTickManager().getTPS()));
+        String averageTps = String.valueOf(String.format("%.1f", Meowhack.INSTANCE.getTickManager().getAverageTPS()));
+        return OrderedText.concat(
+          prefix,
+          OrderedText.styledForwardsVisitedString(tps, Style.EMPTY.withColor(Formatting.WHITE)),
+          OrderedText.styledForwardsVisitedString("[", Style.EMPTY.withColor(Formatting.GRAY)),
+          OrderedText.styledForwardsVisitedString(averageTps, Style.EMPTY.withColor(Formatting.WHITE)),
+          OrderedText.styledForwardsVisitedString("]", Style.EMPTY.withColor(Formatting.GRAY))
+        );
+    }
+
+    public static OrderedText getTimeString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime time = LocalTime.now();
+        OrderedText prefix = OrderedText.styledForwardsVisitedString("Time: ", Style.EMPTY.withColor(Formatting.GRAY));
+        return OrderedText.concat(
+          prefix,
+          OrderedText.styledForwardsVisitedString(time.format(formatter), Style.EMPTY.withColor(Formatting.WHITE))
         );
     }
 }
