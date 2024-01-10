@@ -23,7 +23,7 @@ public class Meowhack implements ModInitializer {
 
 	@Subscribe
 	public void onTest(TestEvent event) {
-		LOGGER.info("Test event fired!");
+		//LOGGER.info("Test event fired!");
 	}
 
 	private ModuleManager moduleManager;
