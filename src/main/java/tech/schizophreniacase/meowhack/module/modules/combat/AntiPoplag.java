@@ -28,7 +28,7 @@ public class AntiPoplag extends Module {
         Matcher matcher = pattern.matcher(message);
         if(matcher.find()) {
             event.cancel(true);
-            ChatUtil.sendClientSideOnlyMessage("§c§l[AntiPoplag] §r§c§l" + "Poplag detected!");
+            ChatUtil.sendMeowhackMessage("Poplag detected!");
         }
     }
 }
