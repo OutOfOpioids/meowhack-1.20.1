@@ -1,6 +1,7 @@
 package tech.schizophreniacase.meowhack.module.modules.client;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.OrderedText;
 import tech.schizophreniacase.meowhack.Meowhack;
 import tech.schizophreniacase.meowhack.event.bus.Subscribe;
@@ -33,10 +34,8 @@ public class Hud extends Module {
     public static Setting<Boolean> fps = new BooleanSetting("FPS", true);
     public static Setting<Boolean> ping = new BooleanSetting("Ping", true);
     public static Setting<Boolean> tps = new BooleanSetting("TPS", true);
-    /*
     public static Setting<Boolean> armor = new BooleanSetting("Armor", true);
     public static Setting<Boolean> totem = new BooleanSetting("Totem", true);
-    */
     public static Setting<Boolean> effect = new BooleanSetting("Effect", true);
     public static Setting<Boolean> time = new BooleanSetting("Time", true);
 
@@ -114,6 +113,22 @@ public class Hud extends Module {
             int textWidth = mc.textRenderer.getWidth(HudUtil.getTimeString());
             drawContext.drawTextWithShadow(mc.textRenderer, HudUtil.getTimeString(), width - textWidth - 2, bottomRight, 0xffffff);
             bottomRight -= elementSize;
+        }
+
+        if(armor.getValue()) {
+
+        }
+    }
+
+    public void drawArmorHud(DrawContext drawContext) {
+
+        int x = mc.getWindow().getScaledWidth() / 2;
+        final int y = mc.getWindow().getScaledHeight() - 55 - ((mc.player.isTouchingWater() && mc.player.isCreative()) ? 10 : 0);
+
+        for(int i = 0; i < 4; i++) {
+            ItemStack itemStack = mc.player.getInventory().armor.get(i);
+
+
         }
     }
 }
