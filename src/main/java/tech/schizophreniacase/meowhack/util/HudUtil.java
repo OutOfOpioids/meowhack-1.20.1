@@ -1,5 +1,7 @@
 package tech.schizophreniacase.meowhack.util;
 
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.predicate.entity.EntityEffectPredicate;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Style;
 import net.minecraft.util.Formatting;
@@ -7,6 +9,9 @@ import tech.schizophreniacase.meowhack.Meowhack;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static tech.schizophreniacase.meowhack.util.Wrapper.mc;
 
@@ -68,5 +73,21 @@ public class HudUtil {
           prefix,
           OrderedText.styledForwardsVisitedString(time.format(formatter), Style.EMPTY.withColor(Formatting.WHITE))
         );
+    }
+
+    public static List<OrderedText> getEffectStrings() {
+        Collection<StatusEffectInstance> effects = mc.player.getStatusEffects();
+        List<OrderedText> effectStrings = new ArrayList<>();
+        for (StatusEffectInstance effect : effects) {
+            OrderedText effectString = OrderedText.concat(
+              OrderedText.styledForwardsVisitedString(effect.getEffectType().getName().getString(), Style.EMPTY.withColor(effect.getEffectType().getColor())),
+              OrderedText.styledForwardsVisitedString(" ", Style.EMPTY),
+              OrderedText.styledForwardsVisitedString(String.valueOf(effect.getAmplifier() + 1), Style.EMPTY.withColor(effect.getEffectType().getColor())),
+              OrderedText.styledForwardsVisitedString(" ", Style.EMPTY),
+              OrderedText.styledForwardsVisitedString(String.valueOf(effect.getDuration()), Style.EMPTY.withColor(Formatting.WHITE))
+            );
+            effectStrings.add(effectString);
+        }
+        return effectStrings;
     }
 }

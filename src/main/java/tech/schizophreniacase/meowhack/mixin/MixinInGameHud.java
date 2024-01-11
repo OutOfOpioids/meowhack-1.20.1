@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import tech.schizophreniacase.meowhack.Meowhack;
 import tech.schizophreniacase.meowhack.event.events.Render2DEvent;
+import tech.schizophreniacase.meowhack.module.modules.client.Hud;
 
 import static tech.schizophreniacase.meowhack.util.Wrapper.nullCheck;
 
@@ -22,6 +23,13 @@ public class MixinInGameHud {
             if(event.isCancelled()) {
                 callbackInfo.cancel();
             }
+        }
+    }
+
+    @Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"), cancellable = true)
+    private void renderStatusEffectOverlay(CallbackInfo callbackInfo) {
+        if(Hud.INSTANCE.isEnabled() && Hud.effect.getValue()) {
+            callbackInfo.cancel();
         }
     }
 }

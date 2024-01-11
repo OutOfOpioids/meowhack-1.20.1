@@ -5,7 +5,8 @@
 	"client": [
 		"MixinMinecraftClient",
 		"MixinInGameHud",
-		"MixinClientConnection"
+		"MixinClientConnection",
+		""
 	],
 	"injectors": {
 		"defaultRequire": 1

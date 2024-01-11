@@ -1,6 +1,7 @@
 package tech.schizophreniacase.meowhack.module.modules.client;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.text.OrderedText;
 import tech.schizophreniacase.meowhack.Meowhack;
 import tech.schizophreniacase.meowhack.event.bus.Subscribe;
 import tech.schizophreniacase.meowhack.event.events.Render2DEvent;
@@ -79,7 +80,16 @@ public class Hud extends Module {
 
         if(coords.getValue()) {
             drawContext.drawTextWithShadow(mc.textRenderer, HudUtil.getCoordinateString(), 2, bottomLeft, 0xffffff);
-            bottomLeft += elementSize;
+            bottomLeft -= elementSize;
+        }
+
+        if(effect.getValue()) {
+            List<OrderedText> effectStrings = HudUtil.getEffectStrings();
+            for (OrderedText effectString : effectStrings) {
+                int textWidth = mc.textRenderer.getWidth(effectString);
+                drawContext.drawTextWithShadow(mc.textRenderer, effectString, width - textWidth - 2, bottomRight, 0xffffff);
+                bottomRight -= elementSize;
+            }
         }
 
         if(fps.getValue()) {
