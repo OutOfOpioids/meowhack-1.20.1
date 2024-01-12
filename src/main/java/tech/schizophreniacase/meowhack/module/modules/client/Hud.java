@@ -1,5 +1,6 @@
 package tech.schizophreniacase.meowhack.module.modules.client;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.OrderedText;
@@ -116,19 +117,28 @@ public class Hud extends Module {
         }
 
         if(armor.getValue()) {
-
+            drawArmorHud(drawContext);
         }
     }
 
     public void drawArmorHud(DrawContext drawContext) {
 
-        int x = mc.getWindow().getScaledWidth() / 2;
-        final int y = mc.getWindow().getScaledHeight() - 55 - ((mc.player.isTouchingWater() && mc.player.isCreative()) ? 10 : 0);
+        int x = mc.getWindow().getScaledWidth() / 2 - 1;
+        final int y = mc.getWindow().getScaledHeight() - 55 - ((mc.player.isTouchingWater() && !mc.player.isCreative()) ? 10 : 0);
 
         for(int i = 0; i < 4; i++) {
             ItemStack itemStack = mc.player.getInventory().armor.get(i);
 
+            x += 19;
+            if(itemStack.isEmpty()) {
+                continue;
+            }
 
+            RenderSystem.enableDepthTest();
+
+            drawContext.drawItem(itemStack, x, y);
+
+            RenderSystem.disableDepthTest();
         }
     }
 }
