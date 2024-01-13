@@ -123,7 +123,7 @@ public class Hud extends Module {
 
     public void drawArmorHud(DrawContext drawContext) {
 
-        int x = mc.getWindow().getScaledWidth() / 2 - 1;
+        int x = mc.getWindow().getScaledWidth() / 2 - 3;
         final int y = mc.getWindow().getScaledHeight() - 55 - ((mc.player.isTouchingWater() && !mc.player.isCreative()) ? 10 : 0);
 
         for(int i = 0; i < 4; i++) {
